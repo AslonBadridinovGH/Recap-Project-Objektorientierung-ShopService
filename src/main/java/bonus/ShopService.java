@@ -3,28 +3,24 @@ package bonus;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import java.security.Provider;
-import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Data
 @RequiredArgsConstructor
 public class ShopService {
 
-    // private ProductRepo productRepo = new ProductRepo();
-    // private OrderRepo orderRepo = new OrderMapRepo();
+  /*   private final IdService uuid = new IdService();
+     private final ProductRepo productRepo = new ProductRepo();
+     private final OrderRepo orderRepo = new OrderMapRepo();*/
 
-    private IdService uuid;
-    private ProductRepo productRepo;
-    private OrderRepo orderRepo;
+    private  IdService uuid = new IdService();
+    private  ProductRepo productRepo = new ProductRepo();
+    private  OrderRepo orderRepo = new OrderMapRepo();
 
-    public ShopService(IdService uuid, ProductRepo productRepo, OrderRepo orderRepo) {
-        this.uuid = uuid;
-        this.productRepo = productRepo;
-        this.orderRepo = orderRepo;
-    }
+
 
     public Order addOrder(List<String> productIds) {
 
@@ -54,8 +50,18 @@ public class ShopService {
 
     public Map<String, Order> getOldestOrderPerStatus(OrderStatus orderStatus){
 
+        List<Order> orders = orderRepo.getOrders();
+        List<Order> orderList = orders.stream().filter(order -> order.orderStatus().equals(orderStatus)).toList();
 
-           return null;
+         Map<String, Order> map = new HashMap<>();
+
+        for (int i = 0; i < orderList.size(); i++) {
+            if (orderList.get(i).zonedDateTime().isBefore(orderList.get(i+1).zonedDateTime())){
+               map.put( orderList.get(i).id(), orderList.get(i));
+            }
+        }
+
+        return map;
     }
 
 

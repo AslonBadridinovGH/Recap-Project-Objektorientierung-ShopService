@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ShopService {
 
-     private ProductRepo productRepo = new ProductRepo();
-     private OrderRepo orderRepo = new OrderMapRepo();
+     private  ProductRepo productRepo = new ProductRepo();
+     private   OrderRepo orderRepo = new OrderMapRepo();
 
 
     public Order addOrder(List<String> productIds) {

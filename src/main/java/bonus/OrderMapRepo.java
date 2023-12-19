@@ -15,6 +15,10 @@ public class OrderMapRepo implements OrderRepo {
        this.orders = orders;
    }
 
+    public OrderMapRepo() {
+
+    }
+
     @Override
     public List<Order> getOrders() {
         return new ArrayList<>(orders.values());
