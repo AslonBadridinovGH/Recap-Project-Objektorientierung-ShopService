@@ -1,19 +1,22 @@
-import javax.swing.text.html.Option;
+package bonus;
+
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+@Data
 public class ProductRepo {
 
     private List<Product> products;
 
-    public ProductRepo() {
-        products = new ArrayList<>();
-        products.add(new Product("1", "Apfel"));
+    public ProductRepo(List<Product> products) {
+        this.products = products;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public ProductRepo() {
+        products = new ArrayList<>();
+        products.add(new Product("7", "Apfel"));
     }
 
 

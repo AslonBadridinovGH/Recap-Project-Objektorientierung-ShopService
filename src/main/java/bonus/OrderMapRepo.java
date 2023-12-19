@@ -1,11 +1,19 @@
+package bonus;
+
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-public class OrderMapRepo implements OrderRepo{
+@Data
+public class OrderMapRepo implements OrderRepo {
 
     private Map<String, Order> orders = new HashMap<>();
+
+   public OrderMapRepo(Map<String, Order> orders) {
+       this.orders = orders;
+   }
 
     @Override
     public List<Order> getOrders() {
@@ -27,4 +35,6 @@ public class OrderMapRepo implements OrderRepo{
     public void removeOrder(String id) {
         orders.remove(id);
     }
+
+
 }

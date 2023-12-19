@@ -1,3 +1,5 @@
+package bonus;
+
 import lombok.With;
 
 import java.time.LocalTime;

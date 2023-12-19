@@ -1,6 +1,10 @@
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalTime;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,7 +20,7 @@ class ShopServiceTest {
         Order actual = shopService.addOrder(productsIds);
 
         //THEN
-        Order expected = new Order("-1", List.of(new Product("1", "Apfel")));
+        Order expected = new Order("-1", List.of(new Product("1", "Apfel")),OrderStatus.PROCESSING, ZonedDateTime.now());
         assertEquals(expected.products(), actual.products());
         assertNotNull(expected.id());
     }
@@ -32,5 +36,36 @@ class ShopServiceTest {
 
         //THEN
         assertNull(actual);
+    }
+
+    @Test
+    void getOrdersTest_whenOrderStatus_expectedList(){
+
+        // GIVEN
+        ShopService shopService = new ShopService();
+
+        //WHEN
+        List<Order> ordersWithStatus = shopService.getOrdersWithStatus(OrderStatus.PROCESSING);
+
+        //THEN
+        List<Order> expected = new ArrayList<>();
+        assertEquals(expected,ordersWithStatus);
+    }
+
+    @Test
+    void updateOrderTest_whenOrderIdAndOrderStatus(){
+
+        // GIVEN
+        ShopService shopService = new ShopService();
+        OrderRepo orderRepo = new OrderMapRepo();
+
+        //WHEN
+        Optional<Order> id = shopService.updateOrder("Id", OrderStatus.PROCESSING);
+
+        Optional<Order> orderById = Optional.ofNullable(orderRepo.getOrderById("id"));
+
+        //THEN
+        assertEquals(orderById, id);
+
     }
 }
